@@ -1,3 +1,8 @@
+char* turnOnGps = "AT+CGNSPWR=1\r\n";
+char* getGpsData = "AT+CGNSINF\r\n";
+
+
+
 void setup() {
   Serial.begin(9600);
   Serial1.begin(9600);
