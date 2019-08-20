@@ -14,6 +14,11 @@ public:
     bool checkCmd(const char *cmd, const char *res, unsigned int timeout = TIMEOUT);
     bool SendCmd(const char *cmd, unsigned int timeout);
     bool CheckRes(const char *res, unsigned int timeout);
+	bool Init();
+	bool Attach();
+	bool Detach();
+	void GetData();
+
 
     
     struct gspdata{
