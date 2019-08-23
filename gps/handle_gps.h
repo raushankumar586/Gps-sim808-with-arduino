@@ -3,7 +3,7 @@
 #include <Arduino.h>
 #define TIMEOUT 4000 // 4 sec
 #define ZERO 0
-
+#define MAX_GPS_BUFFER_SIZE 100
 class HandleGps
 {
 public:
@@ -17,9 +17,15 @@ public:
 	bool Init();
 	bool Attach();
 	bool Detach();
-	void GetData();
-
-
+	bool GetData();
+	bool getGprmcData();
+	bool IsValidGprmcData(char *data);
+	bool parseGprmcData(char *data);
+	 
+	
+	byte bufferIndex=0;
+	byte bufferGps[MAX_GPS_BUFFER_SIZE];
+    const char *gprmcToken = "$GPRMC";
     
     struct gspdata{
 		uint16_t year;
