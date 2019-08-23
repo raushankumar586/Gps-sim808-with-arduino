@@ -79,8 +79,130 @@ bool HandleGps::Detach()
     return true;
 }
 
-void HandleGps::GetData()
+bool HandleGps::GetData()
 {
-    // need to write
+    if(!getGprmcData()) return false; // getting data into buffer
+    if(!IsValidGprmcData(bufferGps))return false; 
+    parseGprmcData(bufferGps);
+}
+//char *receivedStack="$GPRMC,165445.000,A,3110.8635,N,12133.4627,E,0.58,70.26,220916,,,A*57";
+
+bool HandleGps::getGprmcData()
+{
+    char readChar;
+    byte lastTwoBytes;
+    bool dataEnd = false;
+    
+    while (Serial1.available() > 0)
+    {
+        readChar = Serial1.read();
+
+        if (dataEnd)
+        {
+            if (lastTwoBytes--)
+            {
+                bufferGps[bufferIndex] = readChar;
+            }
+            else
+            {
+                dataEnd = false;
+                bufferGps[bufferIndex] = '\0';
+                return true;
+            }
+        }
+        else
+        {
+            switch (readChar)
+            {
+            case '$':
+                bufferIndex = 0;
+                bufferGps[bufferIndex++] = readChar;
+                break;
+            case '*':
+                lastTwoBytes = 2;
+                bufferGps[bufferIndex] = readChar;
+                dataEnd = true;
+            default:
+                if (bufferIndex < MAX_GPS_BUFFER_SIZE)
+                {
+                    bufferGps[bufferIndex++] = readChar;
+                }
+                break;
+            }
+            return false; // return asap after storing data
+        }
+        return false; // return asap storing last two data
+    }
+    return false; // return asap when serial not available
+}
+
+//char *receivedStack="$GPRMC,165445.000,A,3110.8635,N,12133.4627,E,0.58,70.26,220916,,,A*57";
+bool HandleGps::IsValidGprmcData(char *data){
+    if(!strstr(data,gprmcToken)==NULL){
+        if(data[18] =="A"){
+            return true;
+        }
+        else {
+            Serial.println("data[18] : " + data[18]);
+            return false;
+        }
+        
+    }
+    else{
+        bufferIndex = 0;
+        return false;
+    }
+}
+bool HandleGps::parseGprmcData(char *data)
+{
+    char *token = strstr(data, ",");
+    if (!token)
+        return false;
+    char *time = strstr(NULL, ",");
+    if (!time)
+    {
+        return false;
+    }
+    else
+    {
+        // will parse the time data later
+    }
+    char *lat = strstr(NULL, ",");
+    if (!lat)
+    {
+        return false;
+    }
+    else
+    {
+        Serial.println("lat:" + String(lat));
+    }
+
+    char *latdir = strstr(NULL, ",");
+    if (!latdir)
+    {
+        return false;
+    }
+    else
+    {
+        Serial.println("latdir" + String(latdir));
+    }
+    char *lon = strstr(NULL, ",");
+    if (!lon)
+    {
+        return false;
+    }
+    else
+    {
+        Serial.println("lon" + String(lon));
+    }
+    char *londir = strstr(NULL, ",");
+    if (!londir)
+    {
+        return false;
+    }
+    else
+    {
+        Serial.println("londir" + String(londir));
+    }
     return true;
 }
