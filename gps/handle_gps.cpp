@@ -50,11 +50,11 @@ bool HandleGps::CheckRes(const char *res, unsigned int timeout)
 
 bool HandleGps::Init()
 {
-    if (!checkCmd("AT\r\n", "OK\r\n"))
+    if (checkCmd("AT\r\n", "OK\r\n"))
     {
-        return false;
+        return true;
     }
-    return true;
+    return false;
 }
 
 bool HandleGps::Attach()
@@ -82,4 +82,5 @@ bool HandleGps::Detach()
 void HandleGps::GetData()
 {
     // need to write
+    return true;
 }
