@@ -8,7 +8,7 @@ private:
 public:
     handleSim(/* args */);
     ~handleSim();
-    void init();
+    void Init();
 };
 
 
