@@ -84,9 +84,22 @@ bool HandleGps::Detach()
 
 bool HandleGps::GetData()
 {
-    if(!getGprmcData()) return false; // getting data into buffer
-    if(!IsValidGprmcData(bufferGps))return false; 
-    parseGprmcData(bufferGps);
+    if (!getGpggaData())
+        return false; // getting data into buffer
+
+    // sp.debugPrintln("\n\n\n---------------reading done-----------");
+    // sp.debugPrintln("");
+
+    if (!IsValidGpggaData(bufferGps))
+        return false;
+
+
+    // sp.debugPrintln("\n\n\n---------------validation done-----------");
+    if(!parseGpgllData(bufferGps))
+        return false;
+    
+    // sp.debugPrintln("\n\n\n---------------parsing done-----------");
+    return true;
 }
 //char *receivedStack="$GPRMC,165445.000,A,3110.8635,N,12133.4627,E,0.58,70.26,220916,,,A*57";
 
