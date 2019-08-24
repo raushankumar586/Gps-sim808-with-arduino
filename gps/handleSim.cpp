@@ -34,4 +34,48 @@ void handleSim::Init()
 
     return true;
 }
+
+bool handleSim::SendSms()
+{
+    if (!serialCom.checkCmd("AT+CMGF=1\r\n", "OK\r\n"))
+    { // Set message mode to ASCII
+        return false;
+    }
+    delay(500);
+    // Serial1.flush();
+
+    if (!serialCom.SendCmd("AT+CMGS=\""))
+    {
+        return false;
+    }
+    sp.debugPrintln("msz format sent ");
+
+    if (!serialCom.SendCmd("+918969120487"))
+    {
+        return false;
+    }
+    sp.debugPrintln("phone no sent ");
+
+    if (!serialCom.checkCmd("\"\r\n", ">"))
+    {
+        return false;
+    }
+    sp.debugPrintln("Started msz writing... ");
+
+    delay(1000);
+    serialCom.SendCmd("Hello Raushan! I am cooper2.0");
+    sp.debugPrintln("my message ");
+    delay(500);
+    terminationMsz();
+    sp.debugPrintln("msz writing complete ");
+    if(!serialCom.CheckRes("OK\r\n")){
+        return false;
+    }
+    sp.debugPrintln("msz sent ");
+
+    return true; 
+}
+
+void handleSim::terminationMsz(){
+    Serial1.write((char)26);
 }

@@ -9,6 +9,8 @@ public:
     handleSim(/* args */);
     ~handleSim();
     void Init();
+    bool SendSms();
+    void terminationMsz();
 };
 
 
