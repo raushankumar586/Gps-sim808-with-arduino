@@ -218,3 +218,39 @@ bool HandleGps::parseGprmcData(char *data)
     }
     return true;
 }
+
+bool HandleGps::parseGpgllData(char *data)
+{
+    char* token = strtok(data, ",");
+    if (!token)
+        return false;
+
+    char *lat = strtok(NULL, ",");
+    if (!lat)
+        return false;
+    else
+        GpsData.lat = atof(lat);
+
+    char *latdir = strtok(NULL, ",");
+    if (!latdir)
+        return false;
+    else{
+        // GpsData.latdir = latdir;
+    }
+        
+    char *lon = strtok(NULL, ",");
+    if (!lon)
+        return false;
+    else
+        GpsData.lon = atof(lon);
+    char *londir = strtok(NULL, ",");
+    if (!londir)
+        return false;
+    else{
+        // GpsData.londir = londir;
+    }
+
+    return true;
+}
+
+
