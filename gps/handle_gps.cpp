@@ -136,11 +136,13 @@ bool HandleGps::getGpggaData()
             case '$':
                 bufferIndex = 0;
                 bufferGps[bufferIndex++] = readChar;
+
                 break;
             case '*':
                 lastTwoBytes = 2;
                 bufferGps[bufferIndex] = readChar;
                 dataEnd = true;
+                break;
             default:
                 if (bufferIndex < MAX_GPS_BUFFER_SIZE)
                 {
