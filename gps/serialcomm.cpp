@@ -22,7 +22,7 @@ bool serialcomm::checkCmd(const char *cmd, const char *res, unsigned int timeout
 {
     if (SendCmd(cmd, timeout))
     {
-        return CheckRes(res, timeout);
+        return CheckRes(res, timeout);  
     }
 }
 

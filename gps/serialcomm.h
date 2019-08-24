@@ -14,8 +14,8 @@ public:
     ~serialcomm();
     void Setup();
     bool checkCmd(const char *cmd, const char *res, unsigned int timeout = TIMEOUT);
-    bool SendCmd(const char *cmd, unsigned int timeout);
-    bool CheckRes(const char *res, unsigned int timeout);
+    bool SendCmd(const char *cmd, unsigned int timeout = TIMEOUT);
+    bool CheckRes(const char *res, unsigned int timeout = TIMEOUT);
 };
 
 
