@@ -164,18 +164,21 @@ bool HandleGps::getGpggaData()
     return false; // return asap when serial not available
 }
 
-//char *receivedStack="$GPRMC,165445.000,A,3110.8635,N,12133.4627,E,0.58,70.26,220916,,,A*57";
-bool HandleGps::IsValidGprmcData(char *data){
-    if(!strstr(data,gprmcToken)==NULL){
-        if(data[18] =="A"){
-            return true;
-        }
-        else {
-            return false;
-        }
-        
 //char *receivedStack="$Gpgga,165445.000,A,3110.8635,N,12133.4627,E,0.58,70.26,220916,,,A*57";
+bool HandleGps::IsValidGpggaData(char *data)
+{
     // Serial.print(data);
+    if (!strstr(data, GpggaToken) == NULL)
+    {
+        // if (data[18] == "A")  // will do more validation later
+        // {
+        //     return true;
+        // }
+        // else
+        // {
+        //     return false;
+        // }
+    return true;
     }
     else
     {
