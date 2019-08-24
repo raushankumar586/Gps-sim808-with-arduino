@@ -7,6 +7,7 @@ printer::printer(/* args */)
 
 printer::~printer()
 {
+    // will use distructor later to free some memory
 }
 
 void printer::debugPrint(String msz)
