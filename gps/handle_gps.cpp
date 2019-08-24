@@ -101,19 +101,20 @@ bool HandleGps::GetData()
     // sp.debugPrintln("\n\n\n---------------parsing done-----------");
     return true;
 }
-//char *receivedStack="$GPRMC,165445.000,A,3110.8635,N,12133.4627,E,0.58,70.26,220916,,,A*57";
+//char *receivedStack="$Gpgga,165445.000,A,3110.8635,N,12133.4627,E,0.58,70.26,220916,,,A*57";
 
-bool HandleGps::getGprmcData()
+bool HandleGps::getGpggaData()
 {
     char readChar;
     byte lastTwoBytes;
     bool dataEnd = false;
-    
-    while (Serial1.available() > 0)
+
+    while (Serial1.available())
     {
         readChar = Serial1.read();
+        // debuPrint("data reading--");
 
-        if (dataEnd)
+        if (dataEnd)  // will look this part later
         {
             if (lastTwoBytes--)
             {
@@ -123,6 +124,7 @@ bool HandleGps::getGprmcData()
             {
                 dataEnd = false;
                 bufferGps[bufferIndex] = '\0';
+                // sp.debugPrintln("\n------------data complete------------");
                 return true;
             }
         }
@@ -142,6 +144,7 @@ bool HandleGps::getGprmcData()
                 if (bufferIndex < MAX_GPS_BUFFER_SIZE)
                 {
                     bufferGps[bufferIndex++] = readChar;
+                    // sp.debugPrintln("index:" + String(bufferIndex));
                 }
                 break;
             }
@@ -162,10 +165,13 @@ bool HandleGps::IsValidGprmcData(char *data){
             return false;
         }
         
+//char *receivedStack="$Gpgga,165445.000,A,3110.8635,N,12133.4627,E,0.58,70.26,220916,,,A*57";
     // Serial.print(data);
     }
-    else{
+    else
+    {
         bufferIndex = 0;
+        // sp.debugPrintln("token mismatch--");
         return false;
     }
 }
