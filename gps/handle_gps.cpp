@@ -113,6 +113,7 @@ bool HandleGps::getGpggaData()
     {
         readChar = Serial1.read();
         // debuPrint("data reading--");
+        delay(2); // will solve later;
 
         if (dataEnd)  // will look this part later
         {
