@@ -11,6 +11,13 @@ serialcomm::~serialcomm()
 {
 }
 
+void serialcomm::Setup(){
+  Serial.begin(BAUDRATE);
+  Serial1.begin(BAUDRATE);
+  delay(1000); // First time only : will see later
+}
+
+
 bool serialcomm::checkCmd(const char *cmd, const char *res, unsigned int timeout)
 {
     if (SendCmd(cmd, timeout))

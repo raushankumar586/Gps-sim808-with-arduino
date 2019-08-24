@@ -1,20 +1,16 @@
 #include <string.h>
 #include "printer.h"
 #include "handle_gps.h"
-#define BAUDRATE 9600
+#include "serialcomm.h"
 
 HandleGps gps = HandleGps();
 printer sp = printer(); // serial printer
-void serialSetup(){
-  Serial.begin(BAUDRATE);
-  Serial1.begin(BAUDRATE);
-  delay(1000);
-  sp.printMsz("Setup Complete!");
-}
+extern serialcomm serialCom;
 
 void setup()
 {
-  serialSetup();
+  serialCom.Setup();
+  sp.printMsz("Serial Setup Complete!");
   gps.Setup();
   
 }
