@@ -18,6 +18,8 @@ public:
 	bool IsValidData(char *data);
 	bool parseGprmcData(char *data);
 	bool parseGpgllData(char *data);
+	void Setup();
+	void Print();
 	byte bufferIndex=0;
 	byte bufferGps[MAX_GPS_BUFFER_SIZE];
     // const char *GpggaToken = "$GPGGA";
