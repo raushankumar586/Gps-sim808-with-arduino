@@ -84,13 +84,13 @@ bool HandleGps::Detach()
 
 bool HandleGps::GetData()
 {
-    if (!getGpggaData())
+    if (!LoadData())
         return false; // getting data into buffer
 
     // sp.debugPrintln("\n\n\n---------------reading done-----------");
     // sp.debugPrintln("");
 
-    if (!IsValidGpggaData(bufferGps))
+    if (!IsValidData(bufferGps))
         return false;
 
 
@@ -103,7 +103,7 @@ bool HandleGps::GetData()
 }
 //char *receivedStack="$Gpgga,165445.000,A,3110.8635,N,12133.4627,E,0.58,70.26,220916,,,A*57";
 
-bool HandleGps::getGpggaData()
+bool HandleGps::LoadData()
 {
     char readChar;
     byte lastTwoBytes;
@@ -165,7 +165,7 @@ bool HandleGps::getGpggaData()
 }
 
 //char *receivedStack="$Gpgga,165445.000,A,3110.8635,N,12133.4627,E,0.58,70.26,220916,,,A*57";
-bool HandleGps::IsValidGpggaData(char *data)
+bool HandleGps::IsValidData(char *data)
 {
     // Serial.print(data);
     if (!strstr(data, GpggaToken) == NULL)

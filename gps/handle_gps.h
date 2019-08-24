@@ -18,11 +18,9 @@ public:
 	bool Attach();
 	bool Detach();
 	bool GetData();
-	bool getGprmcData();
-	bool IsValidGprmcData(char *data);
+	bool LoadData();
+	bool IsValidData(char *data);
 	bool parseGprmcData(char *data);
-	 
-	
 	byte bufferIndex=0;
 	byte bufferGps[MAX_GPS_BUFFER_SIZE];
     const char *gprmcToken = "$GPRMC";
