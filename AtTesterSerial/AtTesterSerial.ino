@@ -4,8 +4,8 @@ char* getGpsData = "AT+CGNSINF\r\n";
 
 
 void setup() {
-  Serial.begin(9600);
-  Serial1.begin(9600);
+  Serial.begin(9600); 
+  Serial1.begin(9600    );
   delay(1000);
   Serial.println("Setup Complete!");  
 }
