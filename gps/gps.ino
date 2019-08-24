@@ -11,6 +11,7 @@ void serialSetup(){
   delay(1000);
   sp.printMsz("Setup Complete!");
 }
+
 void setup()
 {
   serialSetup();

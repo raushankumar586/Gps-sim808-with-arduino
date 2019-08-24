@@ -48,11 +48,10 @@ bool HandleGps::GetData()
     if (!IsValidData(bufferGps))
         return false;
 
-
     // sp.debugPrintln("\n\n\n---------------validation done-----------");
     if(!parseGpgllData(bufferGps))
         return false;
-    
+
     // sp.debugPrintln("\n\n\n---------------parsing done-----------");
     return true;
 }
@@ -133,7 +132,7 @@ bool HandleGps::IsValidData(char *data)
         // {
         //     return false;
         // }
-    return true;
+        return true;
     }
     else
     {
@@ -210,7 +209,7 @@ bool HandleGps::parseGpgllData(char *data)
     else{
         // GpsData.latdir = latdir;
     }
-        
+
     char *lon = strtok(NULL, ",");
     if (!lon)
         return false;
@@ -226,4 +225,30 @@ bool HandleGps::parseGpgllData(char *data)
     return true;
 }
 
+void HandleGps::Setup()
+{
+    while (!Init())
+    {
+        delay(1000);
+        sp.printMsz("sim com device pair failed...");
+    }
+    sp.printMsz("init success!");
 
+    if (Attach())
+    {
+        sp.printMsz("gps started");
+    }
+    else
+    {
+        sp.printMsz("gps not started");
+    }
+}
+
+void HandleGps::Print(){
+    if(GetData()){
+   String msz = "lattitude : " + String(GpsData.lat)+ "longitude " + String(GpsData.lon) ;
+   sp.debugPrintln(msz);
+  }
+  
+
+}
