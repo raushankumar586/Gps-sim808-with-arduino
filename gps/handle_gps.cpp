@@ -1,4 +1,7 @@
 #include "handle_gps.h"
+#include "printer.h"
+
+extern printer sp;
 
 bool HandleGps::checkCmd(const char *cmd, const char *res, unsigned int timeout)
 {
@@ -143,10 +146,10 @@ bool HandleGps::IsValidGprmcData(char *data){
             return true;
         }
         else {
-            Serial.println("data[18] : " + data[18]);
             return false;
         }
         
+    // Serial.print(data);
     }
     else{
         bufferIndex = 0;
@@ -174,7 +177,6 @@ bool HandleGps::parseGprmcData(char *data)
     }
     else
     {
-        Serial.println("lat:" + String(lat));
     }
 
     char *latdir = strstr(NULL, ",");
@@ -184,7 +186,6 @@ bool HandleGps::parseGprmcData(char *data)
     }
     else
     {
-        Serial.println("latdir" + String(latdir));
     }
     char *lon = strstr(NULL, ",");
     if (!lon)
@@ -193,7 +194,6 @@ bool HandleGps::parseGprmcData(char *data)
     }
     else
     {
-        Serial.println("lon" + String(lon));
     }
     char *londir = strstr(NULL, ",");
     if (!londir)
@@ -202,7 +202,6 @@ bool HandleGps::parseGprmcData(char *data)
     }
     else
     {
-        Serial.println("londir" + String(londir));
     }
     return true;
 }
