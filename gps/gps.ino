@@ -14,33 +14,12 @@ void serialSetup(){
 void setup()
 {
   serialSetup();
-  while (!gps.Init()){
-    delay(1000);
-    sp.printMsz("sim com device pair failed...");
-  }
-  sp.printMsz("init success!");
-
-  if(gps.Attach()){
-    sp.printMsz("gps started");
-  }
-  else{
-    sp.printMsz("gps not started");
-
-  }
-
+  gps.Setup();
+  
 }
 
 void loop()
 {
-  if(gps.GetData()){
-   
-   String msz = "lattitude : " + String(gps.GpsData.lat)+ "longitude " + String(gps.GpsData.lon) ;
-   sp.debugPrintln(msz);
-  }
-  else {
-
-  }
-
-  
+  gps.Print();
 }
 
