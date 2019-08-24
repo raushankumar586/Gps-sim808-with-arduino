@@ -151,9 +151,15 @@ bool HandleGps::getGpggaData()
                 }
                 break;
             }
-            return false; // return asap after storing data
+            if (!dataEnd)
+            {
+                return false;
+            }
         }
-        return false; // return asap storing last two data
+        if (!dataEnd)
+        {
+            return false;
+        }
     }
     return false; // return asap when serial not available
 }
