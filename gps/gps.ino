@@ -1,15 +1,19 @@
 #include <string.h>
 #include "printer.h"
 #include "handle_gps.h"
+#define BAUDRATE 9600
 
 HandleGps gps = HandleGps();
 printer sp = printer(); // serial printer
+void serialSetup(){
+  Serial.begin(BAUDRATE);
+  Serial1.begin(BAUDRATE);
+  delay(1000);
+  sp.printMsz("Setup Complete!");
+}
 void setup()
 {
-  Serial.begin(9600);
-  Serial1.begin(9600);
-  delay(1000);
-  Serial.println("Setup Complete!");
+  serialSetup();
   while (!gps.Init()){
     delay(1000);
     Serial.println("sim com device pair failed...");
@@ -31,7 +35,7 @@ void loop()
 {
   if(gps.GetData()){
     Serial.println("got data");
-
+   
    String msz = "lattitude : " + String(gps.GpsData.lat)+ "longitude " + String(gps.GpsData.lon) ;
    sp.debugPrintln(msz);
   }
