@@ -8,9 +8,12 @@ private:
 public:
     handleSim(/* args */);
     ~handleSim();
-    void Init();
+    bool Init();
     bool SendSms();
-    void terminationMsz();
+    void terminaitionMsz();
+    bool checkReg();
+    bool connectToNetwork();
+    
 };
 
 

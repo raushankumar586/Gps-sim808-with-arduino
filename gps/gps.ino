@@ -16,7 +16,8 @@ void setup()
   sp.printMsz("Serial Setup Complete!");
   // gps.Setup();
   sim.Init();
-  sim.SendSms();
+  // sim.SendSms();
+  sim.connectToNetwork();
 
   
 }
