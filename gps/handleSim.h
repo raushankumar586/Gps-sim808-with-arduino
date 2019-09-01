@@ -13,7 +13,15 @@ public:
     void terminaitionMsz();
     bool checkReg();
     bool connectToNetwork();
-    
+    bool checkGprs();
+    bool resetIPSession();
+    bool checkIPStateInitialization();
+    bool setConnectionMode(int );
+    bool setApn(char* , char* , char* );
+    bool attachWirelessConnection();
+    bool getIpAddress();
+    bool connectTcp(char*, char* );
+
 };
 
 
