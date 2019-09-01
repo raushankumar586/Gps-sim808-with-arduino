@@ -1,6 +1,6 @@
 #ifndef __HANDLESIM_H__
 #define __HANDLESIM_H__
-
+#include<Arduino.h>
 class handleSim
 {
 private:
