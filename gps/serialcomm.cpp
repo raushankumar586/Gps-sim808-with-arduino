@@ -11,18 +11,18 @@ serialcomm::~serialcomm()
 {
 }
 
-void serialcomm::Setup(){
-  Serial.begin(BAUDRATE);
-  Serial1.begin(BAUDRATE);
-  delay(1000); // First time only : will see later
+void serialcomm::Setup()
+{
+    Serial.begin(BAUDRATE);
+    Serial1.begin(BAUDRATE);
+    delay(1000); // First time only : will see later
 }
-
 
 bool serialcomm::checkCmd(const char *cmd, const char *res, unsigned int timeout)
 {
     if (SendCmd(cmd, timeout))
     {
-        return CheckRes(res, timeout);  
+        return CheckRes(res, timeout);
     }
 }
 
@@ -65,3 +65,40 @@ bool serialcomm::CheckRes(const char *res, unsigned int timeout)
     }
     return true; // check out flushing read buffer later
 }
+
+void serialcomm::checkDelayedRes(char *record, int recordLen, unsigned int timeout)
+{
+    unsigned long currTime = millis();
+    int recordIndex = 0;
+
+    while (1)
+    {
+        Serial.println("available data size : " + String(Serial1.available()));
+        while (Serial1.available() > 0)
+        { 
+            char ch = Serial1.read(); // taking in char type.
+            record[recordIndex++] = ch;
+
+            if (recordIndex >= recordLen)
+            {
+                break;
+            }
+        }
+
+        // Serial.println("serial not available to buffer");
+
+        if ((unsigned long)(millis() - currTime) > timeout)
+        {
+            return false;
+        }
+        return true; // check out flushing read buffer later
+    }
+}
+
+void serialcomm::clearBuffer(char *buffer, int count)
+{
+    for(int i=0; i < count; i++) {
+        buffer[i] = '\0';
+    }
+}
+
