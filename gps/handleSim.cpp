@@ -1,3 +1,4 @@
+#include <string.h>
 #include "handleSim.h"
 #include "serialcomm.h"
 #include "printer.h"
@@ -87,6 +88,52 @@ bool handleSim::connectToNetwork(){
         return false;
     }
     Serial.println("registration done");
+
+    if (!checkGprs())
+    {
+        return false;
+    }
+    Serial.println("Gprs done");
+    delay(1000);
+    if (!resetIPSession())
+    {
+        return false;
+    }
+    Serial.println("reset IP Session pass");
+    
+    if (!checkIPStateInitialization())
+    {
+        return false;
+    }
+    Serial.println("check IP State Initialization pass");
+
+    if (!setConnectionMode(0))  //single connection mode
+    {
+        return false;
+    }
+    Serial.println("set Connection Mode");
+
+   if (!setApn("airtelgprs.com","",""))  //single connection mode
+    {
+        return false;
+    }
+    Serial.println("set Apn done");
+
+    if (!attachWirelessConnection())  //single connection mode
+    {
+        return false;
+    }
+    Serial.println("attach Wireless Connection");
+    
+    // getIpAddress();
+
+    if (!connectTcp("13.127.50.145", "80"))  //single connection mode
+    {
+        return false;
+    }
+    String data ;
+    Serial.println(" connectTcp "); 
+
     
 }
 
@@ -99,61 +146,107 @@ bool handleSim::checkReg()
     return true;
 }
 
-// bool handleSim::checkGprs()
-// {
-//     if (!serialCom.checkCmd("AT+CGATT?\r\n", "+CGATT: 1\r\n"))
-//     {
-//         return false;
-//     }
-// }
+bool handleSim::checkGprs()
+{
+    if (!serialCom.checkCmd("AT+CGATT?\r\n", "+CGATT: 1\r\n"))
+    {
+        return false;
+    }
+    return true;
+}
 
-// bool handleSim::resetIPSession()
-// {
-//     if (!serialCom.checkCmd("AT+CIPSHUT\r\n", "SHUT OK\r\n"))
-//     {
-//         return false;
-//     }
-// }
-// bool handleSim::checkIPStateInitialization()
-// {
-//     if (!serialCom.checkCmd("AT+CIPSTATUS\r\n", "OK\r\n"))
-//     {
-//         return false;
-//     }
-// }
+bool handleSim::resetIPSession()
+{
+    if (!serialCom.checkCmd("AT+CIPSHUT\r\n", "SHUT OK\r\n")) 
+    {
+        return false;
+        
+    }
+    return true;
+}
 
-// bool handleSim::setConnectionMode(byte mode)
-// {
-//     //singal connection mode
-//     if (!serialCom.checkCmd("AT+CIPMUX=0\r\n", "OK\r\n"))
-//     {
-//         return false;
-//     }
-// }
+bool handleSim::checkIPStateInitialization()
+{
+    if (!serialCom.checkCmd("AT+CIPSTATUS\r\n", "OK\r\n"))
+    {
+        return false;
+    }
+    return true;
+}
 
-// bool handleSim::setApn(char *apn, char *username, char *password)
-// {
+bool handleSim::setConnectionMode(int mode)
+{
+    //singal connection mode
+    if (!serialCom.checkCmd("AT+CIPMUX=0\r\n", "OK\r\n"))
+    {
+        return false;
+    }
+    return true;
+}
 
-//     // AT + CSTT = “APN”, “UNAME”, “PWD” OK
-// }
+bool handleSim::setApn(char *apn, char *username, char *password)
+{
+    if (!serialCom.checkCmd("AT+CSTT=\"airtelgprs.com\"\r\n", "OK\r\n"))
+    {
+        return false;
+    }
+    return true;
+}
 
-// bool handleSim::attachWirelessConnection()
-// {
-//     if (!serialCom.checkCmd("AT+CIICR\r\n", "OK\r\n"))
-//     {
-//         return false;
-//     }
-// }
 
-// char *handleSim::getIpAddress()
-// {
-//     // AT + CIFSR
-// }
+bool handleSim::attachWirelessConnection()
+{
+    if (!serialCom.checkCmd("AT+CIICR\r\n", "OK\r\n"))
+    {
+        return false;
+    }
+    return true;
+}
 
-// bool handleSim::connectTcp(char *ip, char *port)
-// {
-//     // CONNECT OK
-// }
+bool handleSim::getIpAddress()
+{
+    serialCom.SendCmd("AT+CIFSR\r\n"); // if ip is not checked tcp connection req throws error
+    return true;
+}
+
+
+bool handleSim::connectTcp(char* HOSTIP, char* port)
+{       
+    serialCom.SendCmd("AT+CIFSR\r\n");   // if 
+    delay(100);
+    int size = 1000;
+    char record[size];
+    serialCom.checkDelayedRes(record, size, 3000);
+    Serial.println("record " + String(record));
+    serialCom.clearBuffer(record,size);
+
+
+
+    if(!serialCom.SendCmd("AT+CIPSTART=\"TCP\",\""))
+        return false;
+    if(!serialCom.SendCmd(HOSTIP))
+        return false;
+    if(!serialCom.SendCmd("\",\""))
+        return false;
+    if(!serialCom.SendCmd(port))
+        return false;
+    if(!serialCom.SendCmd("\""))
+        return false;
+    serialCom.SendCmd("\r\n");
+
+    delay(3000);
+    serialCom.checkDelayedRes(record, size, 3000);
+    Serial.println("record tcp" + String(record));
+    serialCom.clearBuffer(record,size);
+
+
+    
+    // later : tcp is connected without starting the server
+
+}
+
+
+
 
 // void handleSim::sendTCPData()
 // {
