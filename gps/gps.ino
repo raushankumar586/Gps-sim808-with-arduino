@@ -1,3 +1,5 @@
+//https://simcom.ee/modules/gsm-gprs-gnss/sim808/
+
 #include <string.h>
 #include "printer.h"
 #include "handle_gps.h"
@@ -24,6 +26,12 @@ void setup()
 
 void loop()
 {
-  // gps.Print();
+  if (Serial1.available())
+  {
+    Serial.write(Serial1.read());
+  }
+  if (Serial.available())
+  {
+    Serial1.write(Serial.read());
+  }
 }
-
