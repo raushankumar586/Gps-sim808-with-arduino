@@ -97,7 +97,7 @@ bool handleSim::connectToNetwork(){
     }
     Serial.println("reset IP Session pass");
     
-    if (!checkIPStateInitialization())
+    if (!checkStatus())
     {
         return false;
     }
@@ -161,12 +161,21 @@ bool handleSim::resetIPSession()
     return true;
 }
 
-bool handleSim::checkIPStateInitialization()
+bool handleSim::checkStatus()
 {
     if (!serialCom.checkCmd("AT+CIPSTATUS\r\n", "OK\r\n"))
     {
         return false;
     }
+    // sim808_read_buffer(resp, sizeof(resp), DEFAULT_TIMEOUT);
+    // if (NULL != strstr(resp, "CONNECTED"))
+    // {
+    //     return true;
+    // }
+    // else
+    // {
+    //     return false;
+    // }
     return true;
 }
 
@@ -177,6 +186,15 @@ bool handleSim::setConnectionMode(int mode)
     {
         return false;
     }
+    // sim808_read_buffer(resp, sizeof(resp), DEFAULT_TIMEOUT);
+    // if (NULL != strstr(resp, "CONNECTED"))
+    // {
+    //     return true;
+    // }
+    // else
+    // {
+    //     return false;
+    // }
     return true;
 }
 
@@ -186,6 +204,15 @@ bool handleSim::setApn(char *apn, char *username, char *password)
     {
         return false;
     }
+    // sim808_read_buffer(resp, sizeof(resp), DEFAULT_TIMEOUT);
+    // if (NULL != strstr(resp, "CONNECTED"))
+    // {
+    //     return true;
+    // }
+    // else
+    // {
+    //     return false;
+    // }
     return true;
 }
 
@@ -196,6 +223,15 @@ bool handleSim::attachWirelessConnection()
     {
         return false;
     }
+    // sim808_read_buffer(resp, sizeof(resp), DEFAULT_TIMEOUT);
+    // if (NULL != strstr(resp, "CONNECTED"))
+    // {
+    //     return true;
+    // }
+    // else
+    // {
+    //     return false;
+    // }
     return true;
 }
 

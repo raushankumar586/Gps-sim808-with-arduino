@@ -15,7 +15,7 @@ public:
     bool connectToNetwork();
     bool checkGprs();
     bool resetIPSession();
-    bool checkIPStateInitialization();
+    bool checkStatus();
     bool setConnectionMode(int );
     bool setApn(char* , char* , char* );
     bool attachWirelessConnection();
