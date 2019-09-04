@@ -121,14 +121,22 @@ bool handleSim::connectToNetwork(){
     }
     Serial.println("attach Wireless Connection");
     
-    // getIpAddress();
+    getIpAddress();
 
     if (!connectTcp("13.127.50.145", "80"))  //single connection mode
     {
         return false;
     }
-    String data ;
+    
     Serial.println(" connectTcp "); 
+    
+    if (!sendTCPData("This is test command from raushan"))  //single connection mode
+    {
+        return false;
+    }
+    
+    Serial.println(" sendTCPData success "); 
+    
 
     
 }
