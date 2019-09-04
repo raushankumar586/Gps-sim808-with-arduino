@@ -260,6 +260,13 @@ bool handleSim::attachWirelessConnection()
 bool handleSim::getIpAddress()
 {
     serialCom.SendCmd("AT+CIFSR\r\n"); // if ip is not checked tcp connection req throws error
+    delay(100);
+    int size = 100;
+    char record[size];
+    serialCom.checkDelayedRes(record, size, 3000);
+    Serial.println("record " + String(record));
+    serialCom.clearBuffer(record,size);
+    
     return true;
 }
 
