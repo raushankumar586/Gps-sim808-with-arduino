@@ -282,11 +282,12 @@ bool handleSim::connectTcp(char* HOSTIP, char* port)
     serialCom.SendCmd("\r\n");
 
     delay(3000);
+    int size = 100;
+    char record[size];
     serialCom.checkDelayedRes(record, size, 3000);
     Serial.println("record tcp" + String(record));
     serialCom.clearBuffer(record,size);
-
-
+    return true;
     
     // later : tcp is connected without starting the server
 
