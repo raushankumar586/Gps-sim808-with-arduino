@@ -67,7 +67,7 @@ bool handleSim::SendSms()
     serialCom.SendCmd("Hello Raushan! I am cooper2.0");
     sp.debugPrintln("my message ");
     delay(500);
-    terminaitionMsz();
+    serialCom.terminationMsz();
     sp.debugPrintln("msz writing complete ");
     if (!serialCom.CheckRes("OK\r\n"))
     {
@@ -78,10 +78,6 @@ bool handleSim::SendSms()
     return true;
 }
 
-void handleSim::terminaitionMsz()
-{
-    Serial1.write((char)26);
-}
 
 bool handleSim::connectToNetwork(){
     if(!checkReg()){

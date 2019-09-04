@@ -18,6 +18,7 @@ public:
     bool CheckRes(const char *res, unsigned int timeout = TIMEOUT);
     void checkDelayedRes(char *record, int recordLen, unsigned int timeout = TIMEOUT);
     void clearBuffer(char *buffer, int count);
+    void terminationMsz();
 };
 
 

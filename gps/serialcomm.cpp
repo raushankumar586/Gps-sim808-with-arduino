@@ -101,4 +101,8 @@ void serialcomm::clearBuffer(char *buffer, int count)
         buffer[i] = '\0';
     }
 }
+void serialcomm::terminationMsz()
+{
+    Serial1.write((char)26);
+}
 
