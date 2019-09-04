@@ -354,3 +354,12 @@ bool handleSim::sendTCPData(char *data)
 
 }
 
+bool handleSim::tcpDisconnect()
+{
+    //AT+CIPSHUT
+    if (!serialCom.checkCmd("AT+CIPSHUT\r\n", "SHUT OK\r\n"))
+    {
+        return false;
+    }
+    return true;
+}
