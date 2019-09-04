@@ -10,7 +10,6 @@ public:
     ~handleSim();
     bool Init();
     bool SendSms();
-    void terminaitionMsz();
     bool checkReg();
     bool connectToNetwork();
     bool checkGprs();

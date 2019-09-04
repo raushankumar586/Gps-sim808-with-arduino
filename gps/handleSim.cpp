@@ -78,7 +78,6 @@ bool handleSim::SendSms()
     return true;
 }
 
-
 bool handleSim::connectToNetwork(){
     if(!checkReg()){
         return false;
@@ -273,7 +272,7 @@ bool handleSim::getIpAddress()
 
 bool handleSim::connectTcp(char* HOSTIP, char* port)
 {       
-
+    
 
 
     if(!serialCom.SendCmd("AT+CIPSTART=\"TCP\",\""))
@@ -295,7 +294,7 @@ bool handleSim::connectTcp(char* HOSTIP, char* port)
     Serial.println("record tcp" + String(record));
     serialCom.clearBuffer(record,size);
     return true;
-    
+
     // later : tcp is connected without starting the server
 
 }
