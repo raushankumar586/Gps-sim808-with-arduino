@@ -319,18 +319,31 @@ bool handleSim::connectTcp(char* HOSTIP, char* port)
 
 }
 
+bool handleSim::sendTCPData(char *data)
+{
 
+    delay(1000);
+    if (!serialCom.checkCmd("AT+CIPSEND\r\n", ">"))
+    {
+        delay(100);
+        Serial.println("send command could not initiated");
+        return false;
+    }
 
+    Serial.println("send command initiated");
+    delay(100);
+    serialCom.SendCmd(data);
+    Serial.println("send command initiated");
+    delay(500);
+    serialCom.terminationMsz();
+    if (!serialCom.CheckRes("SEND OK\r\n"))
+    {
+        Serial.println("send command not complete");
+        return false;
+    }
+    Serial.println("send command  complete");
 
-// void handleSim::sendTCPData()
-// {
-// }
+    return true;
 
-// bool handleSim::tcpDisconnect()
-// {
-//     //AT+CIPSHUT
-//     if (!serialCom.checkCmd("AT+CIPSHUT\r\n", "SHUT OK\r\n"))
-//     {
-//         return false;
-//     }
-// }
+}
+

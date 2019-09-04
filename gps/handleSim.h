@@ -21,7 +21,7 @@ public:
     bool attachWirelessConnection();
     bool getIpAddress();
     bool connectTcp(char*, char* );
-
+    bool sendTCPData(char *data);
 };
 
 
