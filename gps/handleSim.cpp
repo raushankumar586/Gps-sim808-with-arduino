@@ -179,7 +179,14 @@ bool handleSim::checkReg()
 {
     if (!serialCom.checkCmd("AT+CREG?\r\n", "+CREG: 0,1\r\n"))
     {
-        return false;
+        /**
+         * @brief check if simcard is in roaming
+         */
+        if (!serialCom.checkCmd("AT+CREG?\r\n", "+CREG: 0,5\r\n"))
+        {
+            return false;
+        }
+        return true;
     }
     return true;
 }
