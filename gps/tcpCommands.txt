@@ -1,0 +1,10 @@
+atAT+CPIN?
+AT+CGATT?
+AT+CIPSHUT
+AT+CIPSTATUS
+AT+CIPMUX=0
+AT+CIPMUX?
+AT+CSTT="airtelgprs.com"
+at+cstt?
+at+ciicr
+at+cifsr

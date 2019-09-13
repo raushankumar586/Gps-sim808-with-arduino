@@ -16,7 +16,7 @@ void setup()
 {
   serialCom.Setup();
   sp.printMsz("Serial Setup Complete!");
-  // gps.Setup();
+  gps.Setup();
   sim.Init();
   // sim.SendSms();
   sim.connectToNetwork();
@@ -26,12 +26,7 @@ void setup()
 
 void loop()
 {
-  if (Serial1.available())
-  {
-    Serial.write(Serial1.read());
-  }
-  if (Serial.available())
-  {
-    Serial1.write(Serial.read());
-  }
+  gps.Loop();
+  
+  
 }

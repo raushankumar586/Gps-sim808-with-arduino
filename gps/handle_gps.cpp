@@ -5,7 +5,6 @@
 extern printer sp;
 serialcomm serialCom = serialcomm();
 
-
 bool HandleGps::Init()
 {
     if (serialCom.checkCmd("AT\r\n", "OK\r\n"))
@@ -49,7 +48,7 @@ bool HandleGps::GetData()
         return false;
 
     // sp.debugPrintln("\n\n\n---------------validation done-----------");
-    if(!parseGpgllData(bufferGps))
+    if (!parseGpgllData(bufferGps))
         return false;
 
     // sp.debugPrintln("\n\n\n---------------parsing done-----------");
@@ -69,7 +68,7 @@ bool HandleGps::LoadData()
         // debuPrint("data reading--");
         delay(2); // will solve later;
 
-        if (dataEnd)  // will look this part later
+        if (dataEnd) // will look this part later
         {
             if (lastTwoBytes--)
             {
@@ -193,7 +192,7 @@ bool HandleGps::parseGprmcData(char *data)
 
 bool HandleGps::parseGpgllData(char *data)
 {
-    char* token = strtok(data, ",");
+    char *token = strtok(data, ",");
     if (!token)
         return false;
 
@@ -206,7 +205,8 @@ bool HandleGps::parseGpgllData(char *data)
     char *latdir = strtok(NULL, ",");
     if (!latdir)
         return false;
-    else{
+    else
+    {
         // GpsData.latdir = latdir;
     }
 
@@ -218,7 +218,8 @@ bool HandleGps::parseGpgllData(char *data)
     char *londir = strtok(NULL, ",");
     if (!londir)
         return false;
-    else{
+    else
+    {
         // GpsData.londir = londir;
     }
 
@@ -244,11 +245,18 @@ void HandleGps::Setup()
     }
 }
 
-void HandleGps::Print(){
-    if(GetData()){
-   String msz = "lattitude : " + String(GpsData.lat)+ "longitude " + String(GpsData.lon) ;
-   sp.debugPrintln(msz);
-  }
-  
+void HandleGps::Print()
+{
+    if (GetData())
+    {
+        String msz = "lattitude : " + String(GpsData.lat) + "longitude " + String(GpsData.lon);
+        sp.debugPrintln(msz);
+    }
+}
 
+String HandleGps::Loop()
+{
+    GetData();
+    String msz = "lattitude : " + String(GpsData.lat) + "longitude " + String(GpsData.lon);
+    return msz;
 }

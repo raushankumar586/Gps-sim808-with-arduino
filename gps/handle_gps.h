@@ -20,6 +20,7 @@ public:
 	bool parseGpgllData(char *data);
 	void Setup();
 	void Print();
+	String Loop();
 	byte bufferIndex=0;
 	byte bufferGps[MAX_GPS_BUFFER_SIZE];
     // const char *GpggaToken = "$GPGGA";
